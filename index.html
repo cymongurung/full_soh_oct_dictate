@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111827">
+  <title>The Deal Stock Scanner</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">THE DEAL<span>Stock Scanner</span></div>
+    <button class="nav active" data-page="scanner">⌕ <span>Scanner</span></button>
+    <button class="nav" data-page="upload">⇧ <span>Upload Data</span></button>
+    <button class="nav" data-page="status">▣ <span>Data Status</span></button>
+  </aside>
+
+  <div class="backdrop" id="backdrop"></div>
+
+  <main class="main">
+    <header class="topbar">
+      <button class="menu-btn" id="menuBtn">☰</button>
+      <div>
+        <h1 id="pageTitle">Stock Scanner</h1>
+        <p id="topDate">No data loaded</p>
+      </div>
+    </header>
+
+    <section class="page active" id="scannerPage">
+      <div class="scanner-card">
+        <div class="card-header-actions">
+          <button class="primary big" id="openScanner">📷 Scan Barcode</button>
+          <button class="voice-btn active" id="voiceToggle" title="Toggle Audio Voice Dictation">
+            🔊 Voice: ON
+          </button>
+        </div>
+        
+        <div id="reader" class="reader hidden"></div>
+        <div class="zoom-status" id="zoomStatus">Camera ready • 2× zoom will be used when supported</div>
+
+        <div class="or"><span>OR</span></div>
+
+        <div class="search-row">
+          <input id="searchInput" type="text" inputmode="text"
+                 placeholder="Enter barcode or Product ID" autocomplete="off">
+          <button class="primary" id="searchBtn">Search</button>
+        </div>
+        <p class="hint">Scan once, view the result, then choose whether to see related items.</p>
+      </div>
+
+      <div id="resultArea"></div>
+    </section>
+
+    <section class="page" id="uploadPage">
+      <div class="panel">
+        <h2>Upload today's SOH file</h2>
+        <p>Select the new CSV received from your store email. The current inventory on this browser will be replaced.</p>
+
+        <div class="dropzone" id="dropzone">
+          <div class="upload-icon">⇧</div>
+          <strong>Choose CSV file</strong>
+          <span>or drag and drop it here</span>
+          <input type="file" id="csvFile" accept=".csv,text/csv">
+          <button class="secondary" id="chooseFile">Choose File</button>
+        </div>
+
+        <div id="uploadMessage" class="message hidden"></div>
+      </div>
+    </section>
+
+    <section class="page" id="statusPage">
+      <div class="panel">
+        <h2>Current Inventory</h2>
+        <div class="status-grid" id="statusGrid"></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal hidden" id="replaceModal">
+    <div class="modal-card">
+      <h2>Replace Current Inventory?</h2>
+      <p class="modal-warning">The current inventory will be replaced by this new SOH file.</p>
+      <div class="compare-box">
+        <div><span>Current data</span><strong id="currentUploadInfo">—</strong></div>
+        <div><span>New data</span><strong id="newUploadInfo">—</strong></div>
+        <div><span>New file</span><strong id="newFileInfo">—</strong></div>
+      </div>
+      <div class="modal-actions">
+        <button class="secondary" id="cancelReplace">Cancel</button>
+        <button class="primary" id="confirmReplace">Replace & Update</button>
+      </div>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
